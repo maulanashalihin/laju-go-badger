@@ -54,7 +54,7 @@ ssh "$SERVER_USER@$SERVER_HOST" "
         sed -i \"s|APP_URL=http://localhost:8080|APP_URL=$APP_URL|g\" $SERVER_PATH/.env
         sed -i 's/APP_ENV=development/APP_ENV=production/g' $SERVER_PATH/.env
         sed -i 's/SESSION_SECRET=your-secret-key-change-this-in-production/SESSION_SECRET=$SESSION_SECRET/g' $SERVER_PATH/.env
-        sed -i \"s|DB_PATH=./data/app.db|DB_PATH=$SERVER_PATH/data/app.db|g\" $SERVER_PATH/.env
+        sed -i \"s|DB_PATH=./data/badger|DB_PATH=$SERVER_PATH/data/badger|g\" $SERVER_PATH/.env
         echo '      Created .env from .env.example (production-ready)'
     else
         echo '      .env already exists, skipping'

@@ -39,9 +39,9 @@ logs/
 tmp/
 dist
 
-# Binaries
-laju-go
-laju-go.exe
+# Binaries (anchored to repo root so cmd/laju-go/ stays tracked)
+/laju-go
+/laju-go.exe
 
 
 # LLM Wiki (track wiki/ + raw/; ignore auto-generated meta + outputs)

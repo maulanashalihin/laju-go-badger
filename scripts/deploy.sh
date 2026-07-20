@@ -69,9 +69,9 @@ echo -e "${YELLOW}Building frontend...${NC}"
 npm run build
 echo -e "${GREEN}✓ Frontend built${NC}"
 
-# Build Go binary for Linux (pure Go SQLite = no CGO needed)
+# Build Go binary for Linux (Badger KV = pure Go, no CGO needed)
 echo -e "${YELLOW}Building Go binary (linux/amd64)...${NC}"
-GOOS=linux GOARCH=amd64 go build -o "$APP_NAME" .
+GOOS=linux GOARCH=amd64 go build -o "$APP_NAME" ./cmd/laju-go
 echo -e "${GREEN}✓ Binary built: $APP_NAME${NC}"
 
 echo ""
@@ -93,10 +93,9 @@ echo -e "${BLUE}Uploading artifacts...${NC}"
 # Create remote directory if needed
 ssh "$SERVER_USER@$SERVER_HOST" "mkdir -p $SERVER_PATH"
 
-# Upload binary, frontend assets, and migrations
+# Upload binary and frontend assets (Badger is schema-less — no migrations needed)
 scp "$APP_NAME" "$SERVER_USER@$SERVER_HOST:$SERVER_PATH/"
 scp -r dist "$SERVER_USER@$SERVER_HOST:$SERVER_PATH/dist"
-scp -r migrations "$SERVER_USER@$SERVER_HOST:$SERVER_PATH/migrations"
 ssh "$SERVER_USER@$SERVER_HOST" "chmod +x $SERVER_PATH/$APP_NAME"
 echo -e "${GREEN}✓ Binary + assets uploaded${NC}"
 
