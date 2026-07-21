@@ -6,11 +6,28 @@ Build production-ready web applications faster with clean layered architecture t
 
 ## 🚀 Quick Start
 
+### Prerequisites
+
+| Tool | Version | Install |
+|------|---------|---------|
+| **Go** | 1.26+ | [go.dev/dl](https://go.dev/dl/) |
+| **Node.js** | 22+ | [nodejs.org](https://nodejs.org/) |
+| **npm** | 10+ | comes with Node.js |
+| **templ CLI** | latest | `go install github.com/a-h/templ/cmd/templ@latest` |
+
+### Setup
+
 ```bash
-git clone https://github.com/maulanashalihin/laju-go.git
-cd laju-go
-cp .env.example .env
-go mod download && npm install
+git clone https://github.com/maulanashalihin/laju-go-badger.git
+cd laju-go-badger
+make setup
+```
+
+`make setup` checks prerequisites, copies `.env.example` → `.env`, installs Go + Node dependencies, and generates templ files.
+
+### Run
+
+```bash
 npm run dev:all
 ```
 
@@ -58,7 +75,7 @@ Visit `http://localhost:8080` to see your application running.
 ## 📁 Project Structure
 
 ```
-laju-go/
+laju-go-badger/
 ├── cmd/laju-go/main.go        # Application entry point
 ├── app/                       # Backend Go code
 │   ├── handlers/              # HTTP request handlers

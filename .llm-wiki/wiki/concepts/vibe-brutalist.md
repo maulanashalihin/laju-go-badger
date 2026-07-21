@@ -4,9 +4,9 @@
 
 **Source:** [taste-skill/brutalist-skill](https://github.com/Leonxlnx/taste-skill/tree/main/skills/brutalist-skill) — industrial-brutalist-ui.
 
-Swiss typographic print + military terminal aesthetics. Rigid grids, extreme type scale, utilitarian color, analog degradation. Untuk data dashboard, portfolio, atau editorial yang mau feel "declassified blueprint."
+Swiss typographic print + military terminal aesthetics. Rigid grids, extreme type scale, utilitarian color, analog degradation. For data dashboards, portfolios, or editorial that want a "declassified blueprint" feel.
 
-## Visual Archetypes (Pilih 1, jangan campur)
+## Visual Archetypes (Pick 1, don't mix)
 
 ### 1. Swiss Industrial Print (Light)
 
@@ -22,7 +22,7 @@ Swiss typographic print + military terminal aesthetics. Rigid grids, extreme typ
 
 - **Macro (headers):** Neue Haas Grotesk Black, Inter Extra Bold, Archivo Black. Scale: `clamp(4rem, 10vw, 15rem)`. Tracking: -0.03em. Leading: 0.85. Exclusively UPPERCASE.
 - **Micro (data):** JetBrains Mono, IBM Plex Mono, Space Mono. Fixed 10-14px. Tracking 0.05-0.1em. UPPERCASE.
-- **Textural contrast:** Playfair Display, EB Garamond — tapi harus degraded dengan halftone/dithering.
+- **Textural contrast:** Playfair Display, EB Garamond — but must be degraded with halftone/dithering.
 
 ## Color
 
@@ -32,23 +32,23 @@ Swiss typographic print + military terminal aesthetics. Rigid grids, extreme typ
 |------|-------|
 | Background | `#F4F4F0` / `#EAE8E3` (matte paper) |
 | Foreground | `#050505` - `#111111` (carbon ink) |
-| Accent | `#E61919` (hazard red) — satu-satunya accent |
+| Accent | `#E61919` (hazard red) — the only accent |
 
 ### Tactical Telemetry (Dark)
 
 | Role | Value |
 |------|-------|
-| Background | `#0A0A0A` / `#121212` (jangan pure black) |
+| Background | `#0A0A0A` / `#121212` (not pure black) |
 | Foreground | `#EAEAEA` (white phosphor) |
 | Accent | `#E61919` (red) |
-| Terminal green | `#4AF626` — opsional, 1 elemen aja |
+| Terminal green | `#4AF626` — optional, just 1 element |
 
 ## Layout
 
-- **CSS Grid deterministik.** No floating. Grid tracks + intersections.
-- **Visible compartmentalization:** solid `1-2px` borders memisahkan zona. `<hr>` full-width.
-- **Bimodal density:** data tight-packed + macro-typography luas bergantian.
-- **`border-radius: 0`**. No rounded corners. Mekanik rigidity.
+- **Deterministic CSS Grid.** No floating. Grid tracks + intersections.
+- **Visible compartmentalization:** solid `1-2px` borders separating zones. `<hr>` full-width.
+- **Bimodal density:** data tight-packed + macro-typography alternating in wide expanses.
+- **`border-radius: 0`**. No rounded corners. Mechanical rigidity.
 
 ## Effects
 

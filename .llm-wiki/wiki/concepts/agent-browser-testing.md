@@ -5,17 +5,17 @@ status: stub
 
 # Agent Browser Testing
 
-Laju Go menggunakan pi's built-in `agent_browser` untuk E2E testing — tanpa Playwright/Cypress.
+Laju Go uses pi's built-in `agent_browser` for E2E testing — without Playwright/Cypress.
 
-## Skip Login — Inject Session Langsung
+## Skip Login — Inject Session Directly
 
-Untuk test halaman protected tanpa perlu login manual:
+To test protected pages without manual login:
 
-1. Buat session di SQLite
-2. Set cookie via `agent_browser eval`
-3. Buka halaman protected
+1. Create a session in Badger
+2. Set the cookie via `agent_browser eval`
+3. Open the protected page
 
-Detail lengkap: [[concept-e2e-browser-testing]]
+Full details: [[concept-e2e-browser-testing]]
 
 ## Source
 

@@ -76,37 +76,37 @@ storage/
 
 ## Post-Processing Strategy
 
-When an upload completes via TUS (`NotifyCompleteUploads` event), ada 2 skenario:
+When an upload completes via TUS (`NotifyCompleteUploads` event), there are 2 scenarios:
 
-### Skenario A: Langsung Copy ke `completed/` (sekarang)
+### Scenario A: Direct Copy to `completed/` (current)
 
-Cocok untuk file yang langsung bisa di-download tanpa proses tambahan (dokumen, gambar, zip, dll).
+Suitable for files that can be downloaded directly without additional processing (documents, images, zip, etc.).
 
 ```
-storage/uploads/<id>   ← raw file dari TUS
+storage/uploads/<id>   ← raw file from TUS
        │
        ▼ copy
-storage/completed/<filename>   ← akses via /storage/completed/<name>
+storage/completed/<filename>   ← access via /storage/completed/<name>
 ```
 
-**Keuntungan:**
+**Advantages:**
 
-- URL clean pake nama asli
-- Gak perlu auth (via `app.Static`)
-- Langsung bisa diakses
+- Clean URL using the original name
+- No auth needed (via `app.Static`)
+- Immediately accessible
 
-### Skenario B: Proses Lanjutan (transcode, compress, dsb)
+### Scenario B: Further Processing (transcode, compress, etc.)
 
-Cocok untuk file yang perlu diolah dulu sebelum bisa diakses (video → HLS, image → thumbnail, dsb).
+Suitable for files that need to be processed first before they can be accessed (video → HLS, image → thumbnail, etc.).
 
 ```
-storage/uploads/<id>   ← raw file dari TUS (jangan di-copy ke completed)
+storage/uploads/<id>   ← raw file from TUS (do not copy to completed)
        │
-       ▼ (CompleteUploads event langsung trigger processing)
+       ▼ (CompleteUploads event directly triggers processing)
 FFmpeg / ImageMagick / etc.
        │
        ▼
-storage/hls/<id>/          ← hasil processing
+storage/hls/<id>/          ← processing output
 ├── 1080p/
 │   ├── segment-001.ts
 │   └── playlist.m3u8
@@ -115,33 +115,33 @@ storage/hls/<id>/          ← hasil processing
 └── master.m3u8
 ```
 
-**Keuntungan:**
+**Advantages:**
 
-- Hemat IO — gak perlu copy dulu baru proses
-- File asli tetap di `uploads/` — bisa dihapus setelah selesai processing
-- Hasil processing disimpan di folder terpisah dengan struktur sendiri
+- Saves IO — no need to copy first then process
+- Original file stays in `uploads/` — can be deleted after processing is done
+- Processing output is stored in a separate folder with its own structure
 
-### Kapan Pilih A vs B
+### When to Choose A vs B
 
-| Skenario | A (completed) | B (proses langsung) |
-|----------|:-------------:|:-------------------:|
-| Dokumen/PDF/Gambar | ✅ | ❌ |
+| Scenario | A (completed) | B (direct processing) |
+|----------|:-------------:|:---------------------:|
+| Document/PDF/Image | ✅ | ❌ |
 | Video → HLS | ❌ | ✅ |
-| ZIP → extract & simpan | ❌ | ✅ |
-| File besar → compress | ❌ | ✅ |
+| ZIP → extract & store | ❌ | ✅ |
+| Large file → compress | ❌ | ✅ |
 
 ## Upload Policy: TUS vs Multipart
 
-| Upload | Mekanisme | Ukuran Maks | Endpoint | Resumable | CSRF | Kebutuhan |
-|--------|-----------|-------------|----------|-----------|------|-----------|
+| Upload | Mechanism | Max Size | Endpoint | Resumable | CSRF | Requirement |
+|--------|-----------|----------|----------|-----------|------|-------------|
 | **Avatar** (Profile) | Multipart POST | 5MB | `POST /app/upload` | ❌ | ✅ | Update DB + sync session |
-| **File besar** (UploadTest) | TUS chunked | 1GB | `POST /tus/files` | ✅ | ❌ | Simpan file doang |
+| **Large file** (UploadTest) | TUS chunked | 1GB | `POST /tus/files` | ✅ | ❌ | Just store the file |
 
-**Keputusan desain:** Dipisah karena:
+**Design decision:** Separated because:
 
-1. **Overhead TUS gak sebanding** — Avatar 100KB butuh 3 request (POST, HEAD, PATCH), multipart cukup 1 POST
-2. **Kebutuhan beda** — Avatar harus update DB `user.avatar` + sync session, butuh CSRF. TUS cuma simpan file
-3. **Resumable cuma berguna buat besar** — 100KB gagal tinggal upload ulang, 500MB baru rugi kalau gak resumable
+1. **TUS overhead is not worth it** — A 100KB avatar needs 3 requests (POST, HEAD, PATCH), multipart only needs 1 POST
+2. **Different requirements** — Avatar must update DB `user.avatar` + sync session, needs CSRF. TUS just stores the file
+3. **Resumable is only useful for large files** — A 100KB failure just means re-uploading, 500MB is when you lose out without resumable
 
 ## Post-Upload Processing
 
